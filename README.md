@@ -7,16 +7,18 @@ A simple 2D Pong game built with Godot 4.4.
 - **Left Paddle**: Use `W` (up) and `S` (down) keys
 - **Right Paddle**: Use `↑` (up) and `↓` (down) arrow keys
 - **Objective**: Keep the ball from passing your paddle
-- **Game Reset**: When the ball passes either paddle, the game automatically resets to the starting position
+- **Scoring**: Score a point when the ball passes your opponent's paddle
+- **Game Reset**: When a point is scored, the game automatically resets to the starting position
 
 ## Features
 
 - Classic Pong gameplay
-- Automatic game reset when someone loses
+- Scoreboard system to track points
+- Automatic game reset when someone scores
 - Smooth paddle movement with screen boundary limits
 - Ball physics with paddle angle-based deflection
 - Visual center line divider
-- No scoring system - just pure gameplay
+- Score display in the top corners
 
 ## Running the Game
 
@@ -27,13 +29,13 @@ A simple 2D Pong game built with Godot 4.4.
 ## Project Structure
 
 ```
-hello-pong/
+hello-pong-godot/
 ├── scenes/
-│   ├── Main.tscn      # Main game scene
+│   ├── Main.tscn      # Main game scene with UI
 │   ├── Paddle.tscn    # Paddle scene
 │   └── Ball.tscn      # Ball scene
 ├── scripts/
-│   ├── Main.gd        # Main game logic
+│   ├── Main.gd        # Main game logic and scoring
 │   ├── Paddle.gd      # Paddle movement and controls
 │   └── Ball.gd        # Ball physics and collision
 ├── project.godot      # Project configuration
