@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
-var speed = 400
+@export var base_speed: float = 500.0
+var speed: float
 var initial_direction = Vector2(1, 0.5).normalized()
 var paddle_height = 100.0  # Adjust this to match your actual paddle height
 
@@ -9,6 +10,9 @@ func _ready():
 	collision_layer = 1
 	collision_mask = 1
 	print("Ball initialized: collision_layer: ", collision_layer, " collision_mask: ", collision_mask)
+
+	# Initialize speed
+	speed = base_speed
 	
 	# Start ball movement after a short delay
 	await get_tree().create_timer(1.0).timeout
@@ -44,6 +48,9 @@ func _physics_process(delta):
 
 func handle_paddle_collision(paddle: CharacterBody2D, collision_point: Vector2, normal: Vector2, prev_velocity: Vector2):
 	print("Paddle collision detected!")
+
+	# Increase the maximum speed by 2% on each paddle hit
+	speed *= 1.02
 	
 	# Calculate hit factor based on actual collision point relative to paddle center
 	var paddle_center = paddle.global_position
@@ -72,6 +79,7 @@ func handle_paddle_collision(paddle: CharacterBody2D, collision_point: Vector2, 
 	
 	print("Hit factor: ", hit_factor, " Angle variation: ", angle_variation)
 	print("Paddle velocity influence: ", paddle_velocity_influence)
+	print("New max speed: ", speed)
 	print("Final velocity: ", velocity)
 
 func handle_wall_collision(normal: Vector2, prev_velocity: Vector2):
@@ -81,3 +89,7 @@ func handle_wall_collision(normal: Vector2, prev_velocity: Vector2):
 	velocity = prev_velocity.bounce(normal).normalized() * speed
 	
 	print("Wall bounce velocity: ", velocity)
+
+func reset_max_speed():
+	# Reset speed back to the base value (called after a point is scored)
+	speed = base_speed

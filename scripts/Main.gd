@@ -46,6 +46,7 @@ func reset_game():
 	# Reset ball position and velocity
 	ball.position = initial_ball_position
 	ball.velocity = Vector2.ZERO
+	ball.reset_max_speed()
 	
 	# Reset paddle positions
 	left_paddle.position = initial_left_paddle_position
