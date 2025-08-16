@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://bqxvh8yqxqxqx"]
+
+[ext_resource type="Script" uid="uid://csakaoe05n45p" path="res://scripts/Main.gd" id="1_0x8yq"]
+[ext_resource type="PackedScene" uid="uid://bqxvh8yqxqxqy" path="res://scenes/Paddle.tscn" id="2_1x9yq"]
+[ext_resource type="PackedScene" uid="uid://bqxvh8yqxqxq0" path="res://scenes/Ball.tscn" id="3_2x0yq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(1280, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2"]
+size = Vector2(1280, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3"]
+size = Vector2(20, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4"]
+size = Vector2(20, 720)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_0x8yq")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 5.0
+offset_right = 1281.0
+offset_bottom = 725.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="LeftPaddle" parent="." instance=ExtResource("2_1x9yq")]
+position = Vector2(50, 300)
+
+[node name="RightPaddle" parent="." instance=ExtResource("2_1x9yq")]
+position = Vector2(1230, 300)
+is_left = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="Ball" parent="." instance=ExtResource("3_2x0yq")]
+position = Vector2(640, 360)
+
+[node name="CenterLine" type="Line2D" parent="."]
+points = PackedVector2Array(640, 0, 640, 720)
+width = 2.0
+default_color = Color(1, 1, 1, 0.3)
+
+[node name="TopWall" type="StaticBody2D" parent="."]
+position = Vector2(640, -10)
+
+[node name="TopCollision" type="CollisionShape2D" parent="TopWall"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="BottomWall" type="StaticBody2D" parent="."]
+position = Vector2(640, 730)
+
+[node name="BottomCollision" type="CollisionShape2D" parent="BottomWall"]
+shape = SubResource("RectangleShape2D_2")
+
+[node name="LeftGoal" type="Area2D" parent="."]
+position = Vector2(0, 360)
+
+[node name="LeftGoalCollision" type="CollisionShape2D" parent="LeftGoal"]
+shape = SubResource("RectangleShape2D_3")
+
+[node name="RightGoal" type="Area2D" parent="."]
+position = Vector2(1280, 360)
+
+[node name="RightGoalCollision" type="CollisionShape2D" parent="RightGoal"]
+shape = SubResource("RectangleShape2D_4")
