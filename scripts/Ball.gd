@@ -5,6 +5,10 @@ var speed: float
 var initial_direction = Vector2(1, 0.5).normalized()
 var paddle_height = 100.0  # Adjust this to match your actual paddle height
 
+# Color changing variables
+var colors = [Color.WHITE, Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.CYAN, Color.ORANGE]
+var current_color_index = 0
+
 func _ready():
 	# Set collision layers and masks for proper physics
 	collision_layer = 1
@@ -77,6 +81,9 @@ func handle_paddle_collision(paddle: CharacterBody2D, collision_point: Vector2, 
 	# Normalize to maintain consistent speed
 	velocity = final_velocity.normalized() * speed
 	
+	# Change ball color on paddle hit
+	change_color()
+	
 	print("Hit factor: ", hit_factor, " Angle variation: ", angle_variation)
 	print("Paddle velocity influence: ", paddle_velocity_influence)
 	print("New max speed: ", speed)
@@ -93,3 +100,12 @@ func handle_wall_collision(normal: Vector2, prev_velocity: Vector2):
 func reset_max_speed():
 	# Reset speed back to the base value (called after a point is scored)
 	speed = base_speed
+	# Reset color back to white
+	current_color_index = 0
+	modulate = colors[current_color_index]
+
+func change_color():
+	# Cycle to the next color
+	current_color_index = (current_color_index + 1) % colors.size()
+	modulate = colors[current_color_index]
+	print("Ball color changed to: ", colors[current_color_index])
